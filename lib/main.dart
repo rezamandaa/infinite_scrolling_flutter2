@@ -10,14 +10,22 @@ class MyApp extends StatelessWidget {
 
  
   @override
+  @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Startup Name Generator',
-      home: RandomWords(),
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+        ),
+      ),
+      home: const RandomWords(),
     );
   }
+  }
  
-}
+
 class RandomWords extends StatefulWidget {
   const RandomWords({Key? key}) : super(key: key);
 
