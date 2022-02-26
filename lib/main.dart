@@ -8,6 +8,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+ 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -15,8 +16,8 @@ class MyApp extends StatelessWidget {
       home: RandomWords(),
     );
   }
+ 
 }
-
 class RandomWords extends StatefulWidget {
   const RandomWords({Key? key}) : super(key: key);
 
@@ -28,18 +29,17 @@ class _RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
   final _saved = <WordPair>{};
   final _biggerFont = const TextStyle(fontSize: 18.0);
-
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Startup Name Generator'),
       ),
-      
+      // #docregion itemBuilder
       body: ListView.builder(
         padding: const EdgeInsets.all(16.0),
-        itemBuilder: (context, i) {
+        itemBuilder:  (context, i) {
           if (i.isOdd) return const Divider(); 
 
           final index = i ~/ 2; 
@@ -49,7 +49,6 @@ class _RandomWordsState extends State<RandomWords> {
 
           final alreadySaved = _saved.contains(_suggestions[index]);
 
-          
           return ListTile(
             title: Text(
               _suggestions[index].asPascalCase,
@@ -60,11 +59,19 @@ class _RandomWordsState extends State<RandomWords> {
               color: alreadySaved ? Colors.red : null,
               semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
             ),
+            onTap: () {
+              setState(() {
+                if (alreadySaved) {
+                  _saved.remove(_suggestions[index]);
+                } else {
+                  _saved.add(_suggestions[index]);
+                }
+              });
+            },
           );
         },
       ),
     );
   }
 }
-
 
